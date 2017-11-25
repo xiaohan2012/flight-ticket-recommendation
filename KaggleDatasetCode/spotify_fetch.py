@@ -5,6 +5,7 @@ from load_data import load_unique_artist_list
 from graphviz import Graph
 from collections import defaultdict
 import pickle
+import urllib.parse
 
 CREDENTIALS_PATH = "credentials.json"
 SIMILAR_ARTISTS_URL = "https://api.spotify.com/v1/artists/{id}/related-artists"
@@ -39,15 +40,15 @@ def construct_artist_graph(edge_tuples):
     return edges
 
 
-def render_graph(edges):
+def render_graph(tuple_list):
     dot = Graph(comment='Artists', strict=True)
 
-    for node in edges.keys():
-        dot.node(node)
-
-        for n in edges[node]:
-            dot.node(n)
-            dot.edge(node, n)
+    for (a1, a2) in tuple_list:
+        p1 = urllib.parse.quote_plus(a1)
+        p2 = urllib.parse.quote_plus(a2)
+        dot.node(p1)
+        dot.node(p2)
+        dot.edge(p1, p2)
 
     dot.render('test-output/artists', view=True)
 
@@ -85,10 +86,13 @@ def phase2(tuple_list):
 
     graph = dict(graph)
 
+    for (k, v) in graph.items():
+        print("{}: {}".format(k, v))
+
     with open("graph", 'wb') as f:
         pickle.dump(graph, f, pickle.HIGHEST_PROTOCOL)
 
-    render_graph(graph)
+    render_graph(tuple_list)
 
 
 def main():
@@ -99,7 +103,17 @@ def main():
 
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
-    phase1(sp)
+    #phase1(sp)
+
+    tuples=[]
+    with open("similar.txt", "r") as f:
+        for line in f:
+            splitted = line.split("<SEP>")
+            tuples.append((splitted[2].strip(), splitted[3].strip()))
+
+    print(len(tuples))
+    phase2(tuples)
+
 
 
 if __name__ == "__main__":
