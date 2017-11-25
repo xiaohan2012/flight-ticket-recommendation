@@ -1,0 +1,13 @@
+#mapid { height: 600px;}
+
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background: transparent !important;    
+    box-shadow: none !important;
+    padding: 0px !important;
+    border-radius: 0px !important;
+}
+
+
+.collapsible-body {
+    background: white;
+}
