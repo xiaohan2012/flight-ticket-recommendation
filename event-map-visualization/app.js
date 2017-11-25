@@ -76,7 +76,7 @@ $(document).ready(function(){
 			var html = '<ul class="collection with-header">';
 			html += '<li class="collection-header"><h5>They might be interested:</h5></li>';
 
-			$.each(event.users, function(_, users){
+			$.each(event.users, function(uid, users){
 			    var name;
 			    for(var k in users){
 				name = k;
@@ -85,11 +85,37 @@ $(document).ready(function(){
 			    // console.log(interests);
 			    html += '<li class="collection-item"><div>';
 			    html += name;
-			    html += '<a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>';
+			    html += '<a href="#!" class="secondary-content send-offer" ';
+			    html += 'data-city-index="' + cid + '" data-event-index="' + eid + '" ';
+			    html += 'data-user-index="' + uid + '"';
+			    html += '><i class="material-icons">send</i></a></div></li>';
 			});
 			html += '</ul>';
 			// m.find('.body').
+			m.find('.body').empty();
 			m.find('.body').append(html);
+
+			console.log(event);
+			$('.send-offer').on('click', function(){
+			    var cid = $(this).data('city-index');
+			    var eid = $(this).data('event-index');
+			    var uid = $(this).data('user-index');
+			    var event = groups[cid]['events'][eid];
+			    var date = event.date, city = event.city, event_link = event.url, image_link = event.image, event_title = event.name, desc = '', destination = event.city;
+			    var user = event['users'][uid];
+			    var name;
+			    for(var k in user){
+				name = k;
+				// break;
+			    }
+			    console.log('name', name);
+			    var firstname = name.split(' ')[0];
+			    var lastname = name.split(' ')[1];
+			    console.log(city, date, firstname, lastname,
+					event_link, image_link, event_title,
+					desc, destination);
+			    requestFromFinnair(city, date, firstname, lastname, event_link, image_link, event_title, desc, destination);
+			});
 		    });
 		});		
 	    });
