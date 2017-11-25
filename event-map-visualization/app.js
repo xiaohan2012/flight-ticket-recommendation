@@ -37,8 +37,9 @@ $(document).ready(function(){
 		    html += e.name;
 		    html += '</div>';
 		    html += '<div class="collapsible-body"><span>';
-		    html += e.dates;
-		    html += '</span></div>'
+		    html += '<p><i class="small material-icons">access_time</i>';
+		    html += e.date;
+		    html += '</span></p></div>'
 		    html += '</li>';
 		});
 		html += '</ul>';
