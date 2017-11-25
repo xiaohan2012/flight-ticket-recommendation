@@ -1,15 +1,17 @@
-function requestFromFinnair(number, destination, date) {
-	var url = 'https://offer-junction.ecom.finnair.com/api/offerList?adults='+number+'&locale=en&departureLocationCode=HEL&destinationLocationCode='+destination+'&departureDate='+date;
+function requestFromFinnair(destination, date, firstname, lastname, headerlink, headerimg, title, description, destination) {
+	var url = 'https://offer-junction.ecom.finnair.com/api/offerList?adults=1&locale=en&departureLocationCode=HEL&destinationLocationCode='+destination+'&departureDate='+date;
 	$.ajax({
 	  url: url,
 	  success: function (suc) {
 	  	console.log('suc', suc);
+	  	var price = '€' + suc.offers[0].totalPrice;
+	  	clicksend(firstname, lastname, headerlink, headerimg, title, description, destination, price);
 	  }
 	});
 }
 
 
-function clicksend() {
+function clicksend(firstname, lastname, headerlink, headerimg, title, description, destination, price) {
 	var template = $('#template').html();
 	Mustache.parse(template);
 	var rendered = Mustache.render(template, {
