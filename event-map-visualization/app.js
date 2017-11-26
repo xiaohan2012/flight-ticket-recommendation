@@ -103,7 +103,7 @@ $(document).ready(function(){
 			    var eid = $(this).data('event-index');
 			    var uid = $(this).data('user-index');
 			    var event = groups[cid]['events'][eid];
-			    var date = event.date, city = event.city, event_link = event.url, image_link = event.image, event_title = event.name, desc = '', destination = event.city;
+			    var date = event.date, city_code = event.city_code, event_link = event.url, image_link = event.image, event_title = event.name, desc = '', destination = event.city;
 			    var user = event['users'][uid];
 			    var name;
 			    for(var k in user){
@@ -113,11 +113,11 @@ $(document).ready(function(){
 			    console.log('name', name);
 			    var firstname = name.split(' ')[0];
 			    var lastname = name.split(' ')[1];
-			    console.log(city, date, firstname, lastname,
+			    console.log(city_code, date, firstname, lastname,
 					event_link, image_link, event_title,
 					desc, destination);
 			    console.log('requestForm called!!');
-			    Requestfromfinnair(city, date, firstname, lastname, event_link, image_link, event_title, desc, destination);
+			    requestFromFinnair(city_code, date, firstname, lastname, event_link, image_link, event_title, desc);
 			});
 		    });
 		});		

@@ -1,13 +1,38 @@
-function requestFromFinnair(destination, date, firstname, lastname, headerlink, headerimg, title, description, destination) {
-	var url = 'https://offer-junction.ecom.finnair.com/api/offerList?adults=1&locale=en&departureLocationCode=HEL&destinationLocationCode='+destination+'&departureDate='+date;
-	$.ajax({
-	  url: url,
-	  success: function (suc) {
-	  	console.log('suc', suc);
-	  	var price = '€' + suc.offers[0].totalPrice;
-	  	clicksend(firstname, lastname, headerlink, headerimg, title, description, destination, price);
-	  }
-	});
+Array.prototype.randomElement = function () {
+    return this[Math.floor(Math.random() * this.length)]    
+}
+
+function requestFromFinnair(destination, date, firstname, lastname, headerlink, headerimg, title, description) {
+    var url = 'https://offer-junction.ecom.finnair.com/api/offerList?adults=1&locale=en&departureLocationCode=HEL&destinationLocationCode='+destination+'&departureDate='+date;
+    // $.getJSON(url, function(data){
+    // 	console.log('get data', data);
+
+    // })
+    // $.ajax({
+    // 	type: 'GET',
+    // 	url: url,
+    // 	dataType: 'json',
+    // 	success: function (data) {
+    // 	    console.log(data);
+    // 	    var price = '€' + data.totalPrice;
+    // 	    clicksend(firstname, lastname, headerlink, headerimg, title, description, destination, price);
+    // 	}	    
+    // });    
+	// $.ajax({
+	//     url: url,	    
+	//     success: function (suc) {
+	//   	var price = '€' + suc.offers[0].totalPrice;
+	//   	clicksend(firstname, lastname, headerlink, headerimg, title, description, destination, price);
+	//     },
+	//     error: function (code) {
+	// 	var price = '€299';
+	// 	clicksend(firstname, lastname, headerlink, headerimg, title, description, destination, price);
+	// 	// console.log('code', code);
+	//     }
+    // });
+    var prices = [199, 299, 287, 336, 138, 399];
+    var price = "€" + prices.randomElement();
+    clicksend(firstname, lastname, headerlink, headerimg, title, description, destination, price);
 }
 
 
@@ -15,17 +40,18 @@ function clicksend(firstname, lastname, headerlink, headerimg, title, descriptio
 	var template = $('#template').html();
 	Mustache.parse(template);
 	var rendered = Mustache.render(template, {
-		firstname: "Liang",
-		lastname: "Guo",
-		headerlink: "http://google.fi",
-		headerimg: "https://s1.ticketm.net/dam/a/e00/87b95498-5258-4ee6-850d-ade6bc44ae00_565471_RETINA_PORTRAIT_3_2.jpg",
-		title: "hello, check out this event",
-		description: "this event you might interesting, we want to offer this event to you",
-		destination: 'Barcelona',
-		price: '€199'
+		firstname: firstname,
+		lastname: lastname,
+		headerlink: headerlink,
+		headerimg: headerimg,
+		title: title,
+		description: description,
+		destination: destination,
+		price: price
 	});
 	
-	var w = window.open();
-	var html = $("#toNewWindow").html(rendered);
-	$(w.document.body).html(html);
+    var w = window.open();
+        var html = $("#toNewWindow").html(rendered);
+    $(w.document.body).html(html);
+    window.location.reload();
 }
