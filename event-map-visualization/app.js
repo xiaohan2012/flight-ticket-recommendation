@@ -28,9 +28,9 @@ $(document).ready(function(){
 		
 		var loc = city2loc[city];
 		var circle = L.circle([loc['lat'], loc['lon']], {
-		    color: 'red',
-		    fillColor: '#f03',
-		    fillOpacity: 0.5,
+		    color: '#4484ed',
+		    fillColor: '#4484ed',
+		    fillOpacity: 0.7,
 		    radius: 1750 * Math.sqrt(num_users)
 		}).addTo(mymap);
 
@@ -38,17 +38,19 @@ $(document).ready(function(){
 		var top_events = _.take(events, num_events_to_show);
 		var html = '';
 		html += '<ul class="collapsible popout" data-collapsible="accordion">';
+		html += '<li>';
+		html += '<div class="collapsible-header"><h4>';
+		html += city;
+		html += ': </h4></div>';
+		html += '</li>';
 		$.each(top_events, function(event_index, e){
 		    // console.log(event_index);
 		    html += '<li>';
 		    html += '<div class="collapsible-header">';  // <i class="material-icons">subtitles</i>
 		    html += e.name;
-		    // html += '<span class="right grey-text lighten-3" style="display:block">' + e.date + '</span>';
+		    html += '<span class="right orange-text darken-3" style="display:block; margin-left: 20px;">' + e.users.length + ' interested</span>';
 		    html += '</div>';
 		    html += '<div class="collapsible-body">';
-		    html += '<p class="valign-wrapper"><i class="small material-icons">equalizer</i><span>';
-		    html += e.users.length + ' users might be interested';
-		    html += '</span></p>'		    
 		    html += '<p class="valign-wrapper"><i class="small material-icons">access_time</i><span>';
 		    html += e.date;
 		    html += '</span></p>';
@@ -114,7 +116,8 @@ $(document).ready(function(){
 			    console.log(city, date, firstname, lastname,
 					event_link, image_link, event_title,
 					desc, destination);
-			    requestFromFinnair(city, date, firstname, lastname, event_link, image_link, event_title, desc, destination);
+			    console.log('requestForm called!!');
+			    Requestfromfinnair(city, date, firstname, lastname, event_link, image_link, event_title, desc, destination);
 			});
 		    });
 		});		
