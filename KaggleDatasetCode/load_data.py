@@ -110,6 +110,16 @@ def aggregate_artist_plays_for_users(song_to_artists, user_to_artists):
     return users, artists, user_artist_matrix
 
 
+def antonis_function2():
+    sports_fans_file=open(os.path.join(DATA_PATH,'Sports_fans.txt'), 'w')
+    teams=['Paris', 'Manchester City', 'Manchester United', 'Real Madrid', 'Chelsea', 'AC Milan',  'Barcelona', 'Juventus', 'Bayern', 'Tottenham',
+           'Borussia Dortmund', 'Monaco','Arsenal','Liverpool','Atlético', 'Inter', 'Roma', 'Sevilla', 'Napoli', 'Lyon', 'Newcastle', 'Marseille',
+           'Valencia', 'Schalke', 'West Ham', 'Chiacago Bulls', 'Lakers', 'Miami Heat', 'San Antonio Spurs', 'Clippers', 'Cavaliers', 'Warriors',
+           'Celtics', 'Knicks', 'Rockets', 'Blazers', 'Shakhtar', 'Porto', 'Ajax', 'Lazio', 'Benfica']
+    rows = 1000000*[None]
+    for i in tqdm(range(0,1000000)):
+        rows[i]=(str(fake.name()), random.choice(teams))
+    json.dump(rows, sports_fans_file)
 
 def main():
     #song_to_artists, user_to_artists = antonis_function()
@@ -118,7 +128,7 @@ def main():
     #with open("uam.matrix", "wb") as f:
     #    pickle.dump(user_artist_matrix, f)
     return
-
+0
 
 
 if __name__ == "__main__":
